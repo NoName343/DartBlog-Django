@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Category(models.Model):
     title = models.CharField(max_length=250, verbose_name='Наименование')
@@ -7,9 +8,14 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'slug': self.slug})
 
     class Meta():
+        verbose_name = 'Категория (ю)'
+        verbose_name_plural = 'Категории'
         ordering = ['title']
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=50, verbose_name='Наименование')
@@ -18,9 +24,11 @@ class Tag(models.Model):
     def __str__(self):
         return self.title
 
-
     class Meta():
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
         ordering = ['title']
+
 
 class Post(models.Model):
     title = models.CharField(max_length=250, verbose_name='Наименование')
@@ -38,4 +46,6 @@ class Post(models.Model):
 
 
     class Meta():
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
         ordering = ['-created_at']

@@ -2,6 +2,7 @@ from django.contrib import admin
 from django import forms
 from django.db import models
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django.utils.safestring import mark_safe
 
 from .models import *
 
@@ -15,13 +16,33 @@ class PostAdminForm(forms.ModelForm):
 
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+
     form = PostAdminForm
+    save_as = True
+    save_on_top = True
+    list_display = ('id', 'title', 'slug', 'category', 'created_at', 'get_photo')
+    list_display_links = ('id', 'title')
+    search_fields = ('title',)
+    list_filter = ('category',)
+
+    def get_photo(self, obj):
+        if obj.photo:
+            return mark_safe(f'<img src="{obj.photo.url}" width="50">')
+        return 'Фото не установлено'
+
+    get_photo.short_description = 'Фото'
+
 
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
+    list_display = ('title', 'slug')
+
+
 class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+
+    list_display = ('title', 'slug')
 
 
 admin.site.register(Category, CategoryAdmin)

@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'ckeditor',
 
     'Blog.apps.BlogConfig',
+    'testapp.apps.TestappConfig',
+    'mptt',
 ]
 
 MIDDLEWARE = [
@@ -158,7 +160,7 @@ CKEDITOR_CONFIGS = {
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
-            '/',  
+            '/',
             {'name': 'yourcustomtools', 'items': [
                 'Preview',
                 'Maximize',
@@ -183,3 +185,5 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+MPTT_ADMIN_LEVEL_INDENT = 20
